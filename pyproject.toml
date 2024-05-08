@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "personal-wallet"
+version = "0.1.0"
+description = ""
+authors = ["OlegKhiretdinov <oleg@oleg.win>"]
+readme = "README.md"
+packages = [{include = "personal_wallet"}]
+
+[tool.poetry.scripts]
+wallet = "personal_wallet.scripts.wallet:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
