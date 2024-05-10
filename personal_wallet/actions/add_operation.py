@@ -2,23 +2,18 @@ import json
 from datetime import datetime
 
 from personal_wallet.cli import steps
-from personal_wallet.localization import INSERT_DATE_DEFAULT
 from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, DATE_FORMAT
 from personal_wallet.utils import edit_total
 
 
 def add_operation():
-    operation_date = steps.get_date(
-        may_be_empty=True,
-        default_value=datetime.now().strftime(DATE_FORMAT),
-        default_text=INSERT_DATE_DEFAULT
-    )
+    operation_date = steps.get_date(may_be_empty=True)
     operation = steps.get_operation_type()
     amount = steps.get_amount()
     description = steps.get_description()
 
     operation_data = {
-        'date': operation_date,
+        'date': operation_date or datetime.now().strftime(DATE_FORMAT),
         'operation': operation.name,
         'amount': amount,
         'description': description,

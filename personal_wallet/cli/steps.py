@@ -5,18 +5,16 @@ from personal_wallet.settings import DATE_FORMAT, OperationType
 from personal_wallet.utils import date_validator, render_options_list
 
 
-def get_date(*, may_be_empty: bool = False, default_value: str = None, default_text: str = ""):
+def get_date(may_be_empty: bool = False,):
     """
     запрашивает у пользователя дату
     :param may_be_empty: Флаг определяет может ли пользователь не вводить дату
-    :param default_value: Значение по умолчанию если флаг may_be_empty =  True
-    :param default_text: Описание действия по умолчанию
-    :return: строка с датой введёной пользователем или значение по умолчанию
+    :return: строка с датой введёной пользователем или пустая строка
     """
     while True:
-        user_date = input(f'{USER_DATE}\n{default_text}')
+        user_date = input(USER_DATE)
         if user_date == "" and may_be_empty:
-            return default_value
+            return user_date
 
         is_date_correct = date_validator(user_date, DATE_FORMAT)
         if is_date_correct:
@@ -25,10 +23,13 @@ def get_date(*, may_be_empty: bool = False, default_value: str = None, default_t
             print(DATE_ERROR)
 
 
-def get_operation_type() -> OperationType:
+def get_operation_type(may_be_empty: bool = False) -> OperationType | None:
     get_operation_text = SELECT_OPERATION + render_options_list(OPERATION_TYPES_LOC)
     while True:
         operation = input(get_operation_text)
+        if operation == "" and may_be_empty:
+            return
+
         match operation:
             case OperationType.INCOME.value:
                 return OperationType.INCOME
@@ -38,16 +39,15 @@ def get_operation_type() -> OperationType:
                 print(CATEGORY_ERROR)
 
 
-def get_amount(may_be_empty: bool = False, default_value: float = None):
+def get_amount(may_be_empty: bool = False) -> float | None:
     """
-    :param may_be_empty: Флаг определяет может ли пользователь не вводить число
-    :param default_value: Значение по умолчанию если флаг may_be_empty =  True
-    :return: число введённое пользователем или значение по умолчанию
+    :param may_be_empty: Флаг определяет может ли пользователь ничего не вводить
+    :return: число введённое пользователем
     """
     while True:
         amount = input(AMOUNT)
         if amount == "" and may_be_empty:
-            return default_value
+            return
         try:
             amount = round(float(amount), 2)
             if amount > 0:

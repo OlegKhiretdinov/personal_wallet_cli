@@ -2,7 +2,7 @@ import json
 
 from personal_wallet.cli import steps
 from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, OperationType
-from personal_wallet.localization import ACTION_ID_NOT_FOUND, UPDATE_DATE_DEFAULT
+from personal_wallet.localization import ACTION_ID_NOT_FOUND
 from personal_wallet.utils import edit_total
 
 
@@ -18,9 +18,10 @@ def edit_operation():
     except KeyError:
         print(ACTION_ID_NOT_FOUND.format(action_id))
 
-    operation_date = steps.get_date(may_be_empty=True, default_text=UPDATE_DATE_DEFAULT)
-    operation = steps.get_operation_type()
-    amount = steps.get_amount(True)
+    operation_date = steps.get_date(may_be_empty=True)
+    operation = steps.get_operation_type(may_be_empty=True) \
+        or OperationType[editable_entry["operation"]]
+    amount = steps.get_amount(may_be_empty=True)
     description = steps.get_description()
 
     operation_new_raw_data = {

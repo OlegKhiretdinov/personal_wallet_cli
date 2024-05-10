@@ -3,8 +3,6 @@ from personal_wallet.settings import ActionType, OperationType
 WELCOME_TEXT = 'Personal Wallet v 0.1.0'
 SELECT_ACTON = 'ВЫБЕРИТЕ ДЕЙСТВИЕ \n'
 USER_DATE = 'Введите дату в формате YYYY-MM-DD'
-INSERT_DATE_DEFAULT = 'Если оставить пустым подставится текущая дата: '
-UPDATE_DATE_DEFAULT = 'Если оставить пустым, дата не изменится: '
 SELECT_OPERATION = 'ВЫБЕРИТЕ ОПЕРАЦИЮ \n'
 AMOUNT = 'Сумма: '
 DESCRIPTION = 'Описание: '
