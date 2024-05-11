@@ -5,6 +5,8 @@ WALLET_OPERATION_LOG_PATH = 'personal_wallet/db/operations.json'
 DATE_FORMAT = '%Y-%m-%d'
 
 QUIT_COMMAND = 'q'
+SEARCH_COMMAND = 's'
+CANCEL_COMMAND = 'c'
 
 
 class OperationType(Enum):
@@ -17,3 +19,32 @@ class ActionType(Enum):
     EDIT = '2'
     TOTAL = '3'
     SEARCH = '4'
+
+
+# Поля записей в БД
+class DBOperationsFields(Enum):
+    DATE = 'date'
+    AMOUNT = 'amount'
+    OPERATION = 'operation'
+    DESCRIPTION = 'description'
+
+
+# Поля по которым можно вести поиск
+class SearchFields(Enum):
+    DATE = '1'
+    AMOUNT = '2'
+    OPERATION = '3'
+
+
+# Соответствие полей БД и полей поиска
+SearchDbFieldsMap = {
+    SearchFields.DATE.value: DBOperationsFields.DATE.value,
+    SearchFields.AMOUNT.value: DBOperationsFields.AMOUNT.value,
+    SearchFields.OPERATION.value: DBOperationsFields.OPERATION.value
+}
+
+
+class FilterItemFields(Enum):
+    FIELD = 'field'
+    OPERATOR = 'operator'
+    CONDITION = 'condition'

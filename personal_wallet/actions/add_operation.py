@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 from personal_wallet.cli import steps
-from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, DATE_FORMAT
+from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, DATE_FORMAT, DBOperationsFields
 from personal_wallet.utils import edit_total
 
 
@@ -13,10 +13,10 @@ def add_operation():
     description = steps.get_description()
 
     operation_data = {
-        'date': operation_date or datetime.now().strftime(DATE_FORMAT),
-        'operation': operation.name,
-        'amount': amount,
-        'description': description,
+        DBOperationsFields.DATE.value: operation_date or datetime.now().strftime(DATE_FORMAT),
+        DBOperationsFields.OPERATION.value: operation.value,
+        DBOperationsFields.AMOUNT.value: amount,
+        DBOperationsFields.DESCRIPTION.value: description,
     }
 
     with open(WALLET_OPERATION_LOG_PATH, 'r') as f:

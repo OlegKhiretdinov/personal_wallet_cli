@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum
 from typing import Dict
 
 from personal_wallet.settings import OperationType
@@ -12,10 +11,10 @@ def date_validator(date_string: str, date_format: str) -> bool:
         return False
 
 
-def render_options_list(localization: Dict[Enum, str]) -> str:
+def render_options_list(localization: Dict[str, str]) -> str:
     result = ''
     for key, value in localization.items():
-        result += value + ' - ' + key.value + '\n'
+        result += f'{key} - {value}\n'
 
     return result
 
@@ -39,3 +38,12 @@ def edit_total(total: float, value: float, operation: OperationType, is_add: boo
             total -= value
 
     return total
+
+
+def get_all_enum_values(enum) -> list[str]:
+    """
+    Возвращает список значений енума
+    :param enum: Enum
+    :return: list
+    """
+    return [e.value for e in enum]

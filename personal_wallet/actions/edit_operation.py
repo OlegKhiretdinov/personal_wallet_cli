@@ -1,7 +1,7 @@
 import json
 
 from personal_wallet.cli import steps
-from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, OperationType
+from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, OperationType, DBOperationsFields
 from personal_wallet.localization import ACTION_ID_NOT_FOUND
 from personal_wallet.utils import edit_total
 
@@ -24,14 +24,14 @@ def edit_operation():
     amount = steps.get_amount(may_be_empty=True)
     description = steps.get_description()
 
-    operation_new_raw_data = {
-        'date': operation_date,
-        'operation': operation.name,
-        'amount': amount,
-        'description': description,
+    new_raw_data = {
+        DBOperationsFields.DATE.value: operation_date,
+        DBOperationsFields.OPERATION.value: operation.value,
+        DBOperationsFields.AMOUNT.value: amount,
+        DBOperationsFields.DESCRIPTION.value: description,
     }
 
-    operation_new_data = dict((item for item in operation_new_raw_data.items() if item[1]))
+    new_data = dict((item for item in new_raw_data.items() if item[1]))
 
     data['total'] = edit_total(
         data['total'],
@@ -40,7 +40,7 @@ def edit_operation():
         False
     )
 
-    editable_entry.update(operation_new_data)
+    editable_entry.update(new_data)
 
     data['total'] = edit_total(data['total'], editable_entry['amount'], operation)
 
