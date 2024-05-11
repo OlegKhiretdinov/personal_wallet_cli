@@ -11,6 +11,7 @@ wallet = "personal_wallet.scripts.wallet:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+prettytable = "^3.10.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,9 +1,11 @@
 import json
 from datetime import datetime
+from prettytable import PrettyTable
 
 from personal_wallet.cli.steps import get_search_field, get_search_params
+from personal_wallet.localization import SEARCH_FIELDS_LOC, OPERATION_TYPES_LOC
 from personal_wallet.settings import SEARCH_COMMAND, CANCEL_COMMAND, WALLET_OPERATION_LOG_PATH, \
-    FilterItemFields, SearchDbFieldsMap, SearchFields, DATE_FORMAT
+    FilterItemFields, SearchDbFieldsMap, SearchFields, DATE_FORMAT, DBOperationsFields
 
 eq_operation = ('=', '!=')
 gt_lt_operation = ('<', '>')
@@ -93,4 +95,18 @@ def search():
     for key, value in operations.items():
         if filter_entre(value, filters_list):
             result.append({**value, "id": key})
-    print("SEARCH", result)
+
+    new_table = PrettyTable()
+
+    new_table.field_names = ["id", 'Дата', 'Сумма', 'Операция']
+    table_rows = []
+    for item in result:
+        row = [
+            item['id'],
+            item[DBOperationsFields.DATE.value],
+            item[DBOperationsFields.AMOUNT.value],
+            OPERATION_TYPES_LOC[item[DBOperationsFields.OPERATION.value]],
+        ]
+        table_rows.append(row)
+    new_table.add_rows(table_rows)
+    print(new_table)
