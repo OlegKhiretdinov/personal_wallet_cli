@@ -17,16 +17,16 @@ def edit_operation():
         print(editable_entry)
     except KeyError:
         print(ACTION_ID_NOT_FOUND.format(action_id))
+        return
 
     operation_date = steps.get_date(may_be_empty=True)
-    operation = steps.get_operation_type(may_be_empty=True) \
-        or OperationType[editable_entry["operation"]]
+    operation = steps.get_operation_type(may_be_empty=True) or editable_entry["operation"]
     amount = steps.get_amount(may_be_empty=True)
     description = steps.get_description()
 
     new_raw_data = {
         DBOperationsFields.DATE.value: operation_date,
-        DBOperationsFields.OPERATION.value: operation.value,
+        DBOperationsFields.OPERATION.value: operation,
         DBOperationsFields.AMOUNT.value: amount,
         DBOperationsFields.DESCRIPTION.value: description,
     }
@@ -36,7 +36,7 @@ def edit_operation():
     data['total'] = edit_total(
         data['total'],
         editable_entry['amount'],
-        OperationType[editable_entry['operation']],
+        editable_entry['operation'],
         False
     )
 

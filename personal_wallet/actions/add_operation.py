@@ -14,7 +14,7 @@ def add_operation():
 
     operation_data = {
         DBOperationsFields.DATE.value: operation_date or datetime.now().strftime(DATE_FORMAT),
-        DBOperationsFields.OPERATION.value: operation.value,
+        DBOperationsFields.OPERATION.value: operation,
         DBOperationsFields.AMOUNT.value: amount,
         DBOperationsFields.DESCRIPTION.value: description,
     }

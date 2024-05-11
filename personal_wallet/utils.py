@@ -19,7 +19,7 @@ def render_options_list(localization: Dict[str, str]) -> str:
     return result
 
 
-def edit_total(total: float, value: float, operation: OperationType, is_add: bool = True) -> float:
+def edit_total(total: float, value: float, operation: str, is_add: bool = True) -> float:
     """
     Изменение итоговой суммы при добавлении или удалении записи
     :param total: начальная сумма
@@ -32,9 +32,9 @@ def edit_total(total: float, value: float, operation: OperationType, is_add: boo
         value = -value
 
     match operation:
-        case OperationType.INCOME:
+        case OperationType.INCOME.value:
             total += value
-        case OperationType.EXPENDITURE:
+        case OperationType.EXPENDITURE.value:
             total -= value
 
     return total

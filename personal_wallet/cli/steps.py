@@ -27,26 +27,18 @@ def get_date(may_be_empty: bool = False,):
             print(DATE_ERROR.format(DATE_FORMAT, datetime.now().strftime(DATE_FORMAT)))
 
 
-def get_operation_type(may_be_empty: bool = False) -> OperationType | None:
+def get_operation_type(may_be_empty: bool = False) -> str | None:
     get_operation_text = SELECT_OPERATION + render_options_list(OPERATION_TYPES_LOC)
     while True:
         operation = input(get_operation_text)
         if operation == "" and may_be_empty:
             return
 
-        # if operation not in get_all_enum_values(OperationType):
-        #     print(CATEGORY_ERROR)
-        #     return
-        #
-        # return operation
+        if operation not in get_all_enum_values(OperationType):
+            print(CATEGORY_ERROR)
+            return
 
-        match operation:
-            case OperationType.INCOME.value:
-                return OperationType.INCOME
-            case OperationType.EXPENDITURE.value:
-                return OperationType.EXPENDITURE
-            case _:
-                print(CATEGORY_ERROR)
+        return operation
 
 
 def get_amount(may_be_empty: bool = False) -> float | None:

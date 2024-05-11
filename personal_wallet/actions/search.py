@@ -23,7 +23,7 @@ search_fn_map = {
 }
 
 
-def filter_entrie(item, filter_list) -> bool:
+def filter_entre(item, filter_list) -> bool:
     """
     Прогоняет запись по списку фильтров
     :param item: запись
@@ -91,6 +91,6 @@ def search():
         operations = json.loads(f.read())['operations']
 
     for key, value in operations.items():
-        if filter_entrie(value, filters_list):
+        if filter_entre(value, filters_list):
             result.append({**value, "id": key})
     print("SEARCH", result)
