@@ -1,8 +1,8 @@
 import json
 
 from personal_wallet.cli import steps
-from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, OperationType, DBOperationsFields
 from personal_wallet.localization import ACTION_ID_NOT_FOUND
+from personal_wallet.settings import WALLET_OPERATION_LOG_PATH, DBOperationsFields
 from personal_wallet.utils import edit_total
 
 

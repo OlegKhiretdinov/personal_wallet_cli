@@ -6,7 +6,7 @@ from personal_wallet.localization import USER_DATE, SELECT_OPERATION, AMOUNT, AM
     SELECT_SEARCH_FIELD, SEARCH_PARAM_ERROR, INPUT_SEARCH_CONDITION, SEARCH_OPERATION, \
     SEARCH_PARAM_COUNT_ERROR, INVALID_OPERATOR_ERROR
 from personal_wallet.settings import DATE_FORMAT, OperationType, CANCEL_COMMAND, SEARCH_COMMAND, \
-    SearchFields
+    SearchFields, SEARCH_BALANCE_COMMAND
 from personal_wallet.utils import date_validator, render_options_list, get_all_enum_values
 
 
@@ -47,7 +47,7 @@ def get_amount(may_be_empty: bool = False) -> float | None:
     :return: число введённое пользователем
     """
     while True:
-        amount = input(AMOUNT)
+        amount = input(f'{AMOUNT}: ')
         if amount == "" and may_be_empty:
             return
         try:
@@ -81,7 +81,9 @@ def get_search_field() -> str | None:
     text = SELECT_SEARCH_FIELD + '\n' + render_options_list(SEARCH_FIELDS_LOC)
     search_filed = input(text)
 
-    if search_filed in (*get_all_enum_values(SearchFields), CANCEL_COMMAND, SEARCH_COMMAND):
+    # доступные команды
+    command = (CANCEL_COMMAND, SEARCH_COMMAND, SEARCH_BALANCE_COMMAND)
+    if search_filed in (*get_all_enum_values(SearchFields), *command):
         return search_filed
     else:
         print(SEARCH_PARAM_ERROR)

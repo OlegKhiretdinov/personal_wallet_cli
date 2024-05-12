@@ -4,13 +4,18 @@ WELCOME_TEXT = 'Personal Wallet v 0.1.0'
 SELECT_ACTON = 'ВЫБЕРИТЕ ДЕЙСТВИЕ \n'
 USER_DATE = 'Введите дату в формате {}. Пример: {}\n'
 SELECT_OPERATION = 'ВЫБЕРИТЕ ОПЕРАЦИЮ \n'
-AMOUNT = 'Сумма: '
+AMOUNT = 'Сумма'
 DESCRIPTION = 'Описание: '
 EDITED_ACTION_ID = 'ID редактируемого действия: '
 SELECT_SEARCH_FIELD = 'Выберите по какому полю будет идти поиск:'
 INPUT_SEARCH_CONDITION = 'Введите условия поиска\nСписок доступных операторов {} '
 SEARCH_OPERATION = 'В качестве параметра поиска выберите номер операции из списк\n'
-
+INCOME = "Доход"
+EXPENSES = "Расход"
+TOTAL = "Итого"
+DATE = 'Дата'
+OPERATION = 'Операция'
+BALANCE = 'Баланс'
 
 ACTION_ID_NOT_FOUND = 'Запись с ID = {} не найдена'
 AMOUNT_VALUE_ERROR = 'Сумма должна быть числом'
@@ -32,8 +37,8 @@ ACTION_TYPES_LOC = {
 }
 
 OPERATION_TYPES_LOC = {
-    OperationType.INCOME.value: 'Доход',
-    OperationType.EXPENDITURE.value: 'Расход'
+    OperationType.INCOME.value: INCOME,
+    OperationType.EXPENDITURE.value: EXPENSES
 }
 
 SEARCH_FIELDS_LOC = {

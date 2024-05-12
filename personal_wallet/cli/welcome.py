@@ -1,4 +1,4 @@
-from personal_wallet.actions import add_operation, edit_operation, search
+from personal_wallet.actions import add_operation, edit_operation, search, balance
 from personal_wallet.localization import WELCOME_TEXT, SELECT_ACTON, ACTION_ERROR, ACTION_TYPES_LOC
 from personal_wallet.settings import ActionType, QUIT_COMMAND
 from personal_wallet.utils import render_options_list
@@ -15,5 +15,7 @@ def welcome():
                 edit_operation.edit_operation()
             case ActionType.SEARCH.value:
                 search.search()
+            case ActionType.TOTAL.value:
+                balance.get_balance()
             case _:
                 print(ACTION_ERROR)

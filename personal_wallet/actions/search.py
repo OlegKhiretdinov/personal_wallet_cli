@@ -1,16 +1,19 @@
 import json
 from datetime import datetime
+
 from prettytable import PrettyTable
 
 from personal_wallet.cli.steps import get_search_field, get_search_params
-from personal_wallet.localization import SEARCH_FIELDS_LOC, OPERATION_TYPES_LOC
+from personal_wallet.localization import OPERATION_TYPES_LOC, INCOME, EXPENSES, TOTAL, OPERATION, \
+    DATE, AMOUNT
 from personal_wallet.settings import SEARCH_COMMAND, CANCEL_COMMAND, WALLET_OPERATION_LOG_PATH, \
-    FilterItemFields, SearchDbFieldsMap, SearchFields, DATE_FORMAT, DBOperationsFields
+    FilterItemFields, SearchDbFieldsMap, SearchFields, DATE_FORMAT, DBOperationsFields, \
+    OperationType, SEARCH_BALANCE_COMMAND
 
 eq_operation = ('=', '!=')
 gt_lt_operation = ('<', '>')
 
-# Для каждого элемента SearchFields должны быть определены разрешённые операторы
+# Для каждого элемента SearchFields должны быть определены допустимые операторы
 allowed_operator_map = {
     SearchFields.DATE.value: (*eq_operation, *gt_lt_operation),
     SearchFields.AMOUNT.value: (*eq_operation, *gt_lt_operation),
@@ -25,7 +28,7 @@ search_fn_map = {
 }
 
 
-def filter_entre(item, filter_list) -> bool:
+def filter_entry(item, filter_list) -> bool:
     """
     Прогоняет запись по списку фильтров
     :param item: запись
@@ -73,7 +76,7 @@ def search():
             return
 
         # завершение сбора параметров и переход к поиску
-        if search_filed == SEARCH_COMMAND:
+        if search_filed == SEARCH_COMMAND or search_filed == SEARCH_BALANCE_COMMAND:
             break
 
         allowed_operators = allowed_operator_map[search_filed]
@@ -92,13 +95,24 @@ def search():
     with open(WALLET_OPERATION_LOG_PATH, 'r') as f:
         operations = json.loads(f.read())['operations']
 
+    expenses = 0
+    income = 0
+
     for key, value in operations.items():
-        if filter_entre(value, filters_list):
+        if filter_entry(value, filters_list):
+            # Если нужно вывести баланс
+            if search_filed == SEARCH_BALANCE_COMMAND:
+                if value[DBOperationsFields.OPERATION.value] == OperationType.INCOME.value:
+                    income += value[DBOperationsFields.AMOUNT.value]
+                else:
+                    expenses += value[DBOperationsFields.AMOUNT.value]
+
             result.append({**value, "id": key})
 
-    new_table = PrettyTable()
+    entries_table = PrettyTable()
 
-    new_table.field_names = ["id", 'Дата', 'Сумма', 'Операция']
+    entries_table.field_names = ['id', DATE, AMOUNT, OPERATION]
+
     table_rows = []
     for item in result:
         row = [
@@ -108,5 +122,13 @@ def search():
             OPERATION_TYPES_LOC[item[DBOperationsFields.OPERATION.value]],
         ]
         table_rows.append(row)
-    new_table.add_rows(table_rows)
-    print(new_table)
+    entries_table.add_rows(table_rows)
+
+    print(entries_table)
+
+    # Если нужно вывести баланс по результатам поиска
+    if search_filed == SEARCH_BALANCE_COMMAND:
+        total_table = PrettyTable()
+        total_table.field_names = [INCOME, EXPENSES, TOTAL]
+        total_table.add_row([income, expenses, income - expenses])
+        print(total_table)
