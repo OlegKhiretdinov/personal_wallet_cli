@@ -15,6 +15,7 @@ make init
 ```commandline
 make wallet
 ```
+[![asciicast](https://asciinema.org/a/988nAQN1twOKzbCSaGJmoB39m.svg)](https://asciinema.org/a/988nAQN1twOKzbCSaGJmoB39m)
 ## Инструкция пользователя
 Для выбора действия введите соответствующий номер
 
@@ -24,18 +25,21 @@ make wallet
 * Тип операции. Для выбора введите соответствующий номер (обязательное поле)
 * Сумма (обязательное поле)
 * Описание можно не заполнять
+[![asciicast](https://asciinema.org/a/W7oEggaxEWHKBbNQpfbNe7Pcl.svg)](https://asciinema.org/a/W7oEggaxEWHKBbNQpfbNe7Pcl)
 
 ### Редактирование
 Введите id записи(можно узнать в поиске)
 Далее редактирование проходит также как добавление.  
 Обязательных полей нет. Пустые поля дефолтными значениями не заменяются.  
 Обновлены будут те поля, которые заполнены.
+[![asciicast](https://asciinema.org/a/EtScUJc3PeNyhQq5VPgSpQQ9h.svg)](https://asciinema.org/a/EtScUJc3PeNyhQq5VPgSpQQ9h)
 
 ### Поиск по записям
 1. Выбрать по какому полю будет поиск
 2. Введите условия поиска. Оператор и условие должны быть разделены пробелом. Пример: `> 30`
 3. Если нужно добавить ещё условие - повторите п1, п2.
 4. Для запуска поиска, на шаге выбора поля введите `s` или `sb`
+[![asciicast](https://asciinema.org/a/XQOk8kbAAlfs4Kcko44napJol.svg)](https://asciinema.org/a/XQOk8kbAAlfs4Kcko44napJol)
 
 ### Вывод баланса
 Два варианта вывода баланса:
